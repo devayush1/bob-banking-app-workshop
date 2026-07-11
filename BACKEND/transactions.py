@@ -137,6 +137,24 @@ def withdraw():
 
     if request.method == "POST":
         raw    = request.form.get("amount", "")
+
+        # Explicit validation checks
+        if not raw or not raw.strip():
+            flash("Amount is required", "danger")
+            return render_template("withdraw.html", balance=balance)
+
+        try:
+            _amount_val = float(raw.strip())
+        except ValueError:
+            _amount_val = 0
+
+        if _amount_val <= 0:
+            flash("Amount must be greater than zero", "danger")
+            return render_template("withdraw.html", balance=balance)
+
+        if _amount_val > balance:
+            flash("Insufficient funds", "danger")
+            return render_template("withdraw.html", balance=balance)
         amount, error = _parse_amount(raw)
 
         if error:
