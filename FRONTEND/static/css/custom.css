@@ -1,0 +1,141 @@
+/*
+ * custom.css
+ * ----------
+ * Lightweight overrides on top of Bootstrap 5.
+ * Bootstrap handles the heavy lifting; this file only adds the small
+ * visual details that Bootstrap does not provide out of the box.
+ *
+ * Contents:
+ *   1. Global / body
+ *   2. Navbar
+ *   3. Cards
+ *   4. Buttons
+ *   5. Forms
+ *   6. Balance display
+ *   7. Transaction table
+ *   8. Utility helpers
+ */
+
+
+/* ── 1. Global / body ───────────────────────────────────────────────── */
+
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background-color: #f0f4f8;       /* Slightly cooler grey than Bootstrap's bg-light */
+}
+
+
+/* ── 2. Navbar ──────────────────────────────────────────────────────── */
+
+.navbar {
+  /* Slightly deeper primary shade for the top bar */
+  background: linear-gradient(135deg, #0d6efd 0%, #0047b8 100%) !important;
+}
+
+.navbar-brand {
+  letter-spacing: 0.03em;
+}
+
+
+/* ── 3. Cards ───────────────────────────────────────────────────────── */
+
+.card {
+  border-radius: 1rem !important;  /* Consistent 16 px rounded corners */
+  transition: box-shadow 0.2s ease;
+}
+
+.card:hover {
+  box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Round the top corners of card-header independently so the parent
+   border-radius is not overridden by a background on the child. */
+.rounded-top-4 {
+  border-top-left-radius:  1rem !important;
+  border-top-right-radius: 1rem !important;
+}
+
+.rounded-bottom-4 {
+  border-bottom-left-radius:  1rem !important;
+  border-bottom-right-radius: 1rem !important;
+}
+
+
+/* ── 4. Buttons ─────────────────────────────────────────────────────── */
+
+.btn {
+  border-radius: 0.6rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+/* Ensure consistent large-button height */
+.btn-lg {
+  padding: 0.65rem 1.4rem;
+}
+
+
+/* ── 5. Forms ───────────────────────────────────────────────────────── */
+
+.form-control:focus {
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.18);
+}
+
+/* Input group — make the icon prefix visually flush with the input */
+.input-group > .input-group-text {
+  border-right: none;
+}
+
+.input-group > .form-control {
+  border-left: none;
+}
+
+.input-group > .form-control:focus {
+  border-left: none;
+  box-shadow: none;
+}
+
+
+/* ── 6. Balance display ─────────────────────────────────────────────── */
+
+/* Large balance figure on the dashboard */
+.balance-amount {
+  font-size: 2.8rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+
+/* ── 7. Transaction table ───────────────────────────────────────────── */
+
+.table th {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #6c757d;
+  border-top: none;
+}
+
+.table td {
+  vertical-align: middle;
+}
+
+
+/* ── 8. Utility helpers ─────────────────────────────────────────────── */
+
+/* Letter-spacing helper (used on labels) */
+.letter-spacing-1 {
+  letter-spacing: 0.08em;
+}
+
+/* Subtle text on the primary-coloured balance card */
+.text-white-50 {
+  color: rgba(255, 255, 255, 0.55) !important;
+}
+
+/* Ensure the footer always stays at the bottom when content is short */
+html, body {
+  height: 100%;
+}

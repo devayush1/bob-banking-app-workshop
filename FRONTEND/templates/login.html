@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{#
+  login.html
+  ----------
+  Customer login page.
+
+  Extends base.html — inherits the navbar, flash message banner, and footer.
+
+  Form:
+    method  : POST
+    action  : /login   (auth blueprint, login view)
+    fields  : username (text), password (password)
+
+  The form is centred using Bootstrap's grid (col-md-5 with auto margins).
+  No JavaScript is used — standard HTML form submission.
+#}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-12 col-sm-10 col-md-7 col-lg-5">
+
+      <!-- Card wrapper -->
+      <div class="card shadow border-0 rounded-4">
+
+        <!-- Card header with brand -->
+        <div class="card-header bg-primary text-white text-center py-4 rounded-top-4">
+          <i class="bi bi-bank display-5"></i>
+          <h1 class="h3 mt-2 mb-0 fw-bold">MyBank</h1>
+          <p class="mb-0 small opacity-75">Secure Online Banking</p>
+        </div>
+
+        <!-- Card body — the login form -->
+        <div class="card-body p-4 p-md-5">
+          <h2 class="h5 text-center text-muted mb-4">Sign in to your account</h2>
+
+          <form method="POST" action="{{ url_for('auth.login') }}" novalidate>
+
+            <!-- Username field -->
+            <div class="mb-3">
+              <label for="username" class="form-label fw-semibold">
+                <i class="bi bi-person me-1"></i>Username
+              </label>
+              <input
+                type="text"
+                class="form-control form-control-lg"
+                id="username"
+                name="username"
+                placeholder="Enter your username"
+                autocomplete="username"
+                autofocus
+                required
+              />
+            </div>
+
+            <!-- Password field -->
+            <div class="mb-4">
+              <label for="password" class="form-label fw-semibold">
+                <i class="bi bi-lock me-1"></i>Password
+              </label>
+              <input
+                type="password"
+                class="form-control form-control-lg"
+                id="password"
+                name="password"
+                placeholder="Enter your password"
+                autocomplete="current-password"
+                required
+              />
+            </div>
+
+            <!-- Submit button -->
+            <div class="d-grid">
+              <button type="submit" class="btn btn-primary btn-lg">
+                <i class="bi bi-box-arrow-in-right me-2"></i>Login
+              </button>
+            </div>
+
+          </form>
+        </div><!-- /.card-body -->
+
+        <!-- Card footer — demo credentials hint -->
+        <div class="card-footer bg-light text-center text-muted small py-3 rounded-bottom-4">
+          <i class="bi bi-info-circle me-1"></i>
+          Demo credentials &mdash; username: <strong>demo</strong> &nbsp;|&nbsp; password: <strong>demo1234</strong>
+        </div>
+
+      </div><!-- /.card -->
+    </div><!-- /.col -->
+  </div><!-- /.row -->
+</div><!-- /.container -->
+{% endblock %}

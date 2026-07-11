@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{#
+  deposit.html
+  ------------
+  Deposit funds form page.
+
+  Variables passed from transactions.py:
+    (none — this form has no pre-populated data)
+
+  Form:
+    method  : POST
+    action  : /deposit
+    fields  : amount (number, min=0.01, step=0.01)
+
+  The submit button says "Deposit"; a Cancel link returns to /dashboard.
+  Both client-side (HTML min/step) and server-side validation are applied.
+#}
+
+{% block title %}Deposit Funds{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-12 col-sm-10 col-md-7 col-lg-5">
+
+      <div class="card border-0 shadow rounded-4">
+
+        <!-- Card header -->
+        <div class="card-header bg-success text-white text-center py-4 rounded-top-4">
+          <i class="bi bi-arrow-down-circle display-5"></i>
+          <h2 class="h4 mt-2 mb-0 fw-bold">Deposit Funds</h2>
+          <p class="mb-0 small opacity-75">Add money to your account</p>
+        </div>
+
+        <!-- Card body — deposit form -->
+        <div class="card-body p-4 p-md-5">
+
+          <form method="POST" action="{{ url_for('transactions.deposit') }}" novalidate>
+
+            <!-- Amount field -->
+            <div class="mb-4">
+              <label for="amount" class="form-label fw-semibold">
+                <i class="bi bi-currency-dollar me-1"></i>Amount
+              </label>
+              <div class="input-group input-group-lg">
+                <span class="input-group-text bg-success-subtle text-success border-end-0">
+                  <i class="bi bi-currency-dollar"></i>
+                </span>
+                <input
+                  type="number"
+                  class="form-control border-start-0"
+                  id="amount"
+                  name="amount"
+                  placeholder="0.00"
+                  min="0.01"
+                  step="0.01"
+                  autocomplete="off"
+                  autofocus
+                  required
+                />
+              </div>
+              <div class="form-text">
+                Enter the amount you wish to deposit. Minimum: $0.01.
+              </div>
+            </div>
+
+            <!-- Action buttons -->
+            <div class="d-grid gap-2">
+              <button type="submit" class="btn btn-success btn-lg">
+                <i class="bi bi-arrow-down-circle-fill me-2"></i>Deposit
+              </button>
+              <a href="{{ url_for('dashboard.dashboard') }}"
+                 class="btn btn-outline-secondary btn-lg">
+                <i class="bi bi-x-circle me-2"></i>Cancel
+              </a>
+            </div>
+
+          </form>
+
+        </div><!-- /.card-body -->
+      </div><!-- /.card -->
+
+    </div><!-- /.col -->
+  </div><!-- /.row -->
+</div><!-- /.container -->
+{% endblock %}

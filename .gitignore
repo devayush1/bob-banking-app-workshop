@@ -1,0 +1,38 @@
+# ── Python ────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# ── Virtual environments ───────────────────────────────────────────────────
+venv/
+.venv/
+env/
+ENV/
+
+# ── SQLite database files ─────────────────────────────────────────────────
+*.db
+*.sqlite
+*.sqlite3
+
+# ── Test / coverage artefacts ─────────────────────────────────────────────
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# ── Bob workspace internals ───────────────────────────────────────────────
+.bob/
+
+# ── macOS artefacts ───────────────────────────────────────────────────────
+.DS_Store
+.AppleDouble
+
+# ── Editor artefacts ──────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ── Docs folder ───────────────────────────────────────────────────────────
+docs/

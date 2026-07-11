@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+{#
+  dashboard.html
+  --------------
+  Customer home screen — shown immediately after login.
+
+  Variables passed from dashboard.py:
+    username     : str           — customer's login name for the greeting
+    balance      : float         — current account balance (always from DB)
+    transactions : list[Row]     — up to 10 most recent transactions (newest first)
+
+  Sections on this page:
+    1. Greeting + balance card (hero area)
+    2. Quick-action buttons: Deposit, Withdraw
+    3. Recent transactions mini-table
+#}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+
+  <!-- ── Row 1: Greeting ──────────────────────────────────────────── -->
+  <div class="row mb-4">
+    <div class="col">
+      <h2 class="fw-bold mb-0">
+        <i class="bi bi-person-circle text-primary me-2"></i>
+        Welcome back, {{ username }}!
+      </h2>
+      <p class="text-muted mb-0">Here is a summary of your account.</p>
+    </div>
+  </div>
+
+  <!-- ── Row 2: Balance card + quick actions ─────────────────────── -->
+  <div class="row g-4 mb-4">
+
+    <!-- Balance card -->
+    <div class="col-12 col-md-6">
+      <div class="card border-0 shadow-sm rounded-4 h-100 bg-primary text-white">
+        <div class="card-body p-4">
+          <p class="text-white-50 mb-1 small text-uppercase fw-semibold letter-spacing-1">
+            <i class="bi bi-wallet2 me-1"></i>Available Balance
+          </p>
+          <h3 class="display-5 fw-bold mb-0">
+            ${{ balance | currency }}
+          </h3>
+          <p class="text-white-50 mt-2 mb-0 small">Last updated: just now</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick actions card -->
+    <div class="col-12 col-md-6">
+      <div class="card border-0 shadow-sm rounded-4 h-100">
+        <div class="card-body p-4 d-flex flex-column justify-content-center">
+          <h5 class="card-title fw-bold mb-3">
+            <i class="bi bi-lightning-charge text-warning me-2"></i>Quick Actions
+          </h5>
+
+          <!-- Deposit button -->
+          <a href="{{ url_for('transactions.deposit') }}"
+             class="btn btn-success btn-lg mb-3 d-flex align-items-center justify-content-center gap-2">
+            <i class="bi bi-arrow-down-circle-fill"></i>
+            Deposit Funds
+          </a>
+
+          <!-- Withdraw button -->
+          <a href="{{ url_for('transactions.withdraw') }}"
+             class="btn btn-warning btn-lg d-flex align-items-center justify-content-center gap-2 text-dark">
+            <i class="bi bi-arrow-up-circle-fill"></i>
+            Withdraw Funds
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /.row quick actions -->
+
+  <!-- ── Row 3: Recent transactions ──────────────────────────────── -->
+  <div class="row">
+    <div class="col">
+      <div class="card border-0 shadow-sm rounded-4">
+        <div class="card-header bg-white border-bottom-0 pt-4 pb-0 px-4">
+          <h5 class="fw-bold mb-0">
+            <i class="bi bi-clock-history text-primary me-2"></i>Recent Transactions
+          </h5>
+        </div>
+        <div class="card-body px-4 pb-4">
+
+          {% if transactions %}
+            <div class="table-responsive">
+              <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                  <tr>
+                    <th scope="col">Type</th>
+                    <th scope="col" class="text-end">Amount</th>
+                    <th scope="col" class="text-end">Date &amp; Time</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for txn in transactions %}
+                    <tr>
+                      <!-- Type badge -->
+                      <td>
+                        {% if txn['transaction_type'] == 'deposit' %}
+                          <span class="badge bg-success-subtle text-success border border-success-subtle px-3 py-2">
+                            <i class="bi bi-arrow-down-circle me-1"></i>Deposit
+                          </span>
+                        {% else %}
+                          <span class="badge bg-warning-subtle text-warning border border-warning-subtle px-3 py-2">
+                            <i class="bi bi-arrow-up-circle me-1"></i>Withdrawal
+                          </span>
+                        {% endif %}
+                      </td>
+
+                      <!-- Amount with colour coding -->
+                      <td class="text-end fw-semibold {% if txn['transaction_type'] == 'deposit' %}text-success{% else %}text-danger{% endif %}">
+                        {% if txn['transaction_type'] == 'deposit' %}+{% else %}-{% endif %}${{ txn['amount'] | currency }}
+                      </td>
+
+                      <!-- Timestamp -->
+                      <td class="text-end text-muted small">{{ txn['timestamp'] }}</td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+
+          {% else %}
+            <!-- Empty state -->
+            <div class="text-center py-5 text-muted">
+              <i class="bi bi-inbox display-4 d-block mb-3 opacity-50"></i>
+              <p class="mb-0">No transactions yet. Make your first deposit!</p>
+            </div>
+          {% endif %}
+
+        </div><!-- /.card-body -->
+      </div><!-- /.card -->
+    </div>
+  </div><!-- /.row transactions -->
+
+</div><!-- /.container -->
+{% endblock %}
